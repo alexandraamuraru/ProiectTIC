@@ -3,7 +3,7 @@ import {
     signInWithEmailAndPassword,
     signOut
 } from 'firebase/auth';
-import { auth } from '../config/firebase';
+import { auth } from '../config/firebase-config';
 
 export const firebaseService = {
     async register(email, password) {
