@@ -46,7 +46,6 @@ const authController = {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            console.log("USER EXISTS")
             const userData = userDoc.data();
             
             res.status(200).json({
