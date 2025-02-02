@@ -151,7 +151,6 @@
     color: #0056b3;
   }
   
-  /* Responsive adjustments */
   @media (max-width: 480px) {
     .unauthorized-content {
       padding: 1.5rem;

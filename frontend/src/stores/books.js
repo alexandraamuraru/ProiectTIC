@@ -23,7 +23,6 @@ export const useBookStore = defineStore('books', {
             this.loading = true;
             try {
                 const response = await api.get("/books");
-                console.log(response);
         
                 this.books = response.data.map(book => ({
                     id: book.id,
@@ -84,7 +83,6 @@ export const useBookStore = defineStore('books', {
             this.loading = true;
             try {
                 const response = await api.post('/books', newBook);
-                console.log(response)
               if (response.status !== 201) {
                 throw new Error('Error creating book');
               }
@@ -103,14 +101,11 @@ export const useBookStore = defineStore('books', {
         async updateBook(book) {
             this.loading = true;
             try {
-              // Use the book's id in the URL path
               const response = await api.put(`/books/${book.id}`, book);
-              console.log(response);
               if (response.status !== 200) {
                 throw new Error('Error updating book');
               }
               const data = response.data;
-              // Optionally update your local state (e.g., update the book in this.books)
               return data;
             } catch (error) {
               this.error = error.message;

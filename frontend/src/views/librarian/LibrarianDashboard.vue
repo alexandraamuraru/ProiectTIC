@@ -1,18 +1,12 @@
 <template>
-    <div class="admin-dashboard">
-      <header class="admin-header">
-        <h1>Hello, Admin!</h1>
+    <div class="librarian-dashboard">
+      <header class="librarian-header">
+        <h1>Hello!</h1>
         <p>What would you like to do today?</p>
       </header>
   
-      <div class="admin-actions">
-        <button class="action-btn" @click="redirectTo('/admin/users')">
-          Manage Users
-        </button>
-        <button class="action-btn" @click="redirectTo('/librarians')">
-          Manage Librarians
-        </button>
-        <button class="action-btn" @click="redirectTo('/admin/loans')">
+      <div class="librarian-actions">
+        <button class="action-btn" @click="redirectTo('/loans')">
           Manage Loans
         </button>
         <button class="action-btn" @click="redirectTo('/books')">
@@ -21,22 +15,19 @@
       </div>
 
     </div>
-  </template>
-  
-  <script setup>
-  import { useRouter } from 'vue-router';
-  import { useAuthStore } from '../../stores/auth';
-  
-  const router = useRouter();
-  const authStore = useAuthStore();
+ </template>
 
-  const redirectTo = (path) => {
-    router.push(path);
-  };
-  </script>
-  
-  <style scoped>
-  .admin-dashboard {
+ <script setup>
+ import { useRouter } from 'vue-router';
+ 
+ const router = useRouter();
+
+ const redirectTo = (path) => {
+   router.push(path);
+ };
+ </script>
+ <style scoped>
+ .librarian-dashboard {
     padding: 2rem;
     background-color: #f5f6fa;
     min-height: 100vh;
@@ -45,19 +36,19 @@
     align-items: center;
   }
   
-  .admin-header {
+  .librarian-header {
     text-align: center;
     margin-bottom: 2rem;
   }
   
-  .admin-actions {
+  .librarian-actions {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     width: 300px;
   }
   
-  .action-btn {
+  .librarian-btn {
     width: 100%;
     padding: 1rem;
     background-color: #2c3e50;
@@ -75,3 +66,4 @@
 
   </style>
   
+ 

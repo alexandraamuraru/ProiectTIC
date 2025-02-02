@@ -53,20 +53,24 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
-        async register(email, password) {
+        async register(fullName, email, password) {
             this.loading = true;
             this.error = null;
             try {
                 const firebaseUser = await firebaseService.register(email, password);
                 
                 const token = await firebaseUser.getIdToken();
+                const uid = firebaseUser.uid;
+                
                 const response = await api.post('/auth/register', { 
+                    fullName, 
                     email, 
-                    token 
+                    uid
                 });
                 
-                this.user = firebaseUser;
-                this.userDetails = response.data.user;
+                if (response.status === 201) {
+                    await this.login(email, password);
+                } throw new Error("Register failed");
             } catch (error) {
                 switch (error.code) {
                     case 'auth/email-already-in-use':

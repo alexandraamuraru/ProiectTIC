@@ -21,6 +21,16 @@ const routes = [
     beforeEnter: requireAuth
   },
   {
+    path: '/loans',
+    component: () => import('../views/staff/LoansDashboard.vue'),
+    beforeEnter: requireAuth
+  },
+  {
+    path: '/librarians',
+    component: () => import('../views/admin/LibrarianManagement.vue'),
+    beforeEnter: requireAuth
+  },
+  {
     path: '/admin',
     component: () => import('../views/admin/AdminLayout.vue'),
     beforeEnter: requireAdmin,
@@ -29,34 +39,12 @@ const routes = [
         path: '',
         component: () => import('../views/admin/AdminDashboard.vue')
       },
-      {
-        path: 'users',
-        component: () => import('../views/admin/UsersManagement.vue'),
-      },
-      {
-        path: 'librarians',
-        component: () => import('../views/admin/LibrarianManagement.vue'),
-      },
-      {
-        path: 'loans',
-        component: () => import('../views/staff/LoansDashboard.vue'),
-      },
     ],
   },
   {
     path: '/librarian',
     component: () => import('../views/librarian/LibrarianDashboard.vue'),
     beforeEnter: requireLibrarian,
-    children: [
-      {
-        path: 'books',
-        component: () => import('../views/staff/BooksDashboard.vue'),
-      },
-      {
-        path: 'loans',
-        component: () => import('../views/staff/LoansDashboard.vue'),
-      },
-    ],
   },
   {
     path: '/member',

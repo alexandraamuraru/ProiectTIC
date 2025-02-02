@@ -4,10 +4,9 @@
         <router-link to="/" class="nav-brand">Library System</router-link>
         <div class="nav-links">
           <router-link to="/books" class="nav-link">Books</router-link>
-          <router-link to="/loans" class="nav-link">My Loans</router-link>
+          <router-link to="/loans" class="nav-link">Loans</router-link>
           
-          <!-- Admin-Only Link -->
-          <router-link v-if="isAdmin" to="/users" class="nav-link">Users</router-link>
+          <router-link v-if="isAdmin" to="/librarians" class="nav-link">Librarians</router-link>
   
           <button @click="handleLogout" class="logout-btn">Logout</button>
         </div>
@@ -41,7 +40,8 @@
   width: 100%;
   background-color: #2c3e50;
   padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 0 0 12px 12px;
   display: flex;
   justify-content: center;
   z-index: 1000;

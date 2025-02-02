@@ -6,6 +6,18 @@
       
       <form @submit.prevent="handleSubmit">
         <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input 
+            type="fullName" 
+            id="fullName" 
+            v-model="fullName" 
+            required 
+            placeholder="Enter your name"
+            class="form-input"
+          >
+        </div>
+
+        <div class="form-group">
           <label for="email">Email</label>
           <input 
             type="email" 
@@ -76,6 +88,7 @@
   const authStore = useAuthStore();
   const { loading, error } = storeToRefs(authStore);
   
+  const fullName = ref('');
   const email = ref('');
   const password = ref('');
   const confirmPassword = ref('');
@@ -96,7 +109,7 @@
     }
     
     try {
-      await authStore.register(email.value, password.value);
+      await authStore.register(fullName.value, email.value, password.value);
       router.push('/');
     } catch (err) {
       console.error('Registration error:', err);
