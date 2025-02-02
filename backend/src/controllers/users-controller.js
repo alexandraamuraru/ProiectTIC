@@ -54,26 +54,6 @@ const usersController = {
         }
     },
 
-    async updateUserRole(req, res) {
-        try {
-            const { id } = req.params;
-            const { role } = req.body;
-            
-            const validRoles = ['admin', 'librarian', 'member'];
-            if (!validRoles.includes(role)) {
-                return res.status(400).json({ message: 'Invalid role' });
-            }
-
-            const db = admin.firestore();
-            await db.collection('users').doc(id).update({ role });
-            
-            res.status(200).json({ message: 'User role updated successfully' });
-        } catch (error) {
-            logger.error('Error updating user role:', error);
-            res.status(500).json({ message: error.message });
-        }
-    },
-
     async createLibrarian(req, res) {
         try {
             const { email, password, fullName } = req.body;
@@ -90,75 +70,11 @@ const usersController = {
                 role: 'librarian',
                 createdAt: admin.firestore.FieldValue.serverTimestamp(),
                 status: 'active',
-                createdBy: req.user.uid,
-                activeLoans: [],
-                stats: {
-                    totalBorrowed: 0,
-                    currentlyBorrowed: 0,
-                    overdueCount: 0
-                }
             });
     
             res.status(201).json({ message: 'Librarian created successfully' });
         } catch (error) {
             logger.error('Error creating librarian:', error);
-            res.status(400).json({ message: error.message });
-        }
-    },
-
-    async createMember(req, res) {
-        try {
-            const { email, password, fullName } = req.body;
-    
-            const userRecord = await admin.auth().createUser({
-                email,
-                password
-            });
-    
-            const db = admin.firestore();
-            await db.collection('users').doc(userRecord.uid).set({
-                email,
-                fullName,
-                role: 'member',
-                createdAt: admin.firestore.FieldValue.serverTimestamp(),
-                status: 'active',
-                createdBy: req.user.uid,
-                activeLoans: [],
-                stats: {
-                    totalBorrowed: 0,
-                    currentlyBorrowed: 0,
-                    overdueCount: 0
-                }
-            });
-    
-            res.status(201).json({ message: 'Member created successfully' });
-        } catch (error) {
-            logger.error('Error creating member:', error);
-            res.status(400).json({ message: error.message });
-        }
-    },
-
-    async createAdmin(req, res) {
-        try {
-            const { email, password, fullName } = req.body;
-    
-            const userRecord = await admin.auth().createUser({
-                email,
-                password
-            });
-    
-            const db = admin.firestore();
-            await db.collection('users').doc(userRecord.uid).set({
-                email,
-                fullName,
-                role: 'admin',
-                createdAt: admin.firestore.FieldValue.serverTimestamp(),
-                status: 'active',
-            });
-    
-            res.status(201).json({ message: 'Admin created successfully' });
-        } catch (error) {
-            logger.error('Error creating member:', error);
             res.status(400).json({ message: error.message });
         }
     }
