@@ -6,7 +6,7 @@ const roleAuth = require('../middlewares/role-auth');
 
 router.post('/', 
     authMiddleware, 
-    roleAuth(['admin', 'librarian']), 
+    roleAuth(['member']), 
     loansController.createLoan
 );
 
@@ -15,5 +15,10 @@ router.put('/:loanId/return',
     roleAuth(['admin', 'librarian']), 
     loansController.returnBook
 );
+
+router.get('/',
+    authMiddleware,
+    loansController.getAllLoans
+)
 
 module.exports = router;

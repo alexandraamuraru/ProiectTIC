@@ -7,7 +7,6 @@ const authHandler = async (req, res, next) => {
         if (!token) {
             return res.status(401).json({ message: 'No token provided'});
         }
-
         const db = admin.firestore();
         const decodedToken = await admin.auth().verifyIdToken(token);
         const userDoc = await db.collection('users').doc(decodedToken.uid).get();

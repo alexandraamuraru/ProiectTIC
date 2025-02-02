@@ -4,21 +4,16 @@ const logger = require('../config/logger-config');
 const authController = {
     async register(req, res) {
         try {
-            const { email, password, fullName } = req.body;
+            const { email, fullName, uid } = req.body;
 
             const db = admin.firestore();
-            await db.collection('users').doc(userRecord.uid).set({
+            await db.collection('users').doc(uid).set({
                 email,
                 fullName,
                 role: 'member',
                 membershipDate: admin.firestore.FieldValue.serverTimestamp(),
                 status: 'active',
-                activeLoans: [],
-                stats: {
-                    totalBorrowed: 0,
-                    currentlyBorrowed: 0,
-                    overdueCount: 0
-                }
+                activeLoans: []
             });
 
             res.status(201).json({ message: 'User created successfully' });
@@ -41,7 +36,6 @@ const authController = {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            // const userData = userDoc.data();
             const userData = req.user.details;
             res.status(200).json({
                 user: {

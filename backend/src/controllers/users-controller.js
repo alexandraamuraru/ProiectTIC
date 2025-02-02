@@ -11,7 +11,8 @@ const usersController = {
             usersSnapshot.forEach(doc => {
                 users.push({ id: doc.id, ...doc.data() });
             });
-
+            
+            console.log("acum trece")
             res.status(200).json(users);
         } catch (error) {
             logger.error('Error getting users:', error);
@@ -77,7 +78,24 @@ const usersController = {
             logger.error('Error creating librarian:', error);
             res.status(400).json({ message: error.message });
         }
-    }
+    },
+
+    async deleteUser(req, res) {
+        try {
+          const { id } = req.params;
+    
+          await admin.auth().deleteUser(id);
+    
+          const db = admin.firestore();
+          await db.collection('users').doc(id).delete();
+    
+          res.status(200).json({ message: 'User deleted successfully' });
+        } catch (error) {
+          logger.error('Error deleting user:', error);
+          res.status(500).json({ message: error.message });
+        }
+      },
+
 };
 
 module.exports = usersController;

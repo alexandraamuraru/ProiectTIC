@@ -22,6 +22,12 @@ router.put('/:id',
     usersController.updateUser
 );
 
+router.delete('/:id', 
+    authMiddleware, 
+    roleAuth(['admin']), 
+    usersController.deleteUser
+);
+
 router.post('/librarian', 
     authMiddleware, 
     roleAuth(['admin']), 

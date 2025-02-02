@@ -1,7 +1,6 @@
 const validateBook = (req, res, next) => {
     const { title, author, ISBN } = req.body;
     
-    console.log(req.body)
     if (!title || !author || !ISBN) {
         return res.status(400).json({ 
             message: 'Title, author, and ISBN are required' 
