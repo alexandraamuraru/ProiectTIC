@@ -47,11 +47,9 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import { storeToRefs } from 'pinia';
 
-// const router = useRouter();
 const authStore = useAuthStore();
 const { loading, error } = storeToRefs(authStore);
 
