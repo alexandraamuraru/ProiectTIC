@@ -22,10 +22,10 @@ router.put('/:id',
     usersController.updateUser
 );
 
-router.put('/:id/role', 
+router.post('/librarian', 
     authMiddleware, 
     roleAuth(['admin']), 
-    usersController.updateUserRole
+    usersController.createLibrarian
 );
 
 module.exports = router;

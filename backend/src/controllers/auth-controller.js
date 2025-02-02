@@ -6,10 +6,10 @@ const authController = {
         try {
             const { email, password, fullName } = req.body;
 
-            const userRecord = await admin.auth().createUser({
-                email,
-                password
-            });
+            // const userRecord = await admin.auth().createUser({
+            //     email,
+            //     password
+            // });
 
             const db = admin.firestore();
             await db.collection('users').doc(userRecord.uid).set({
@@ -46,8 +46,8 @@ const authController = {
                 return res.status(404).json({ message: 'User not found' });
             }
 
+            console.log(userDoc)
             const userData = userDoc.data();
-            
             res.status(200).json({
                 user: {
                     uid: decodedToken.uid,
@@ -63,23 +63,26 @@ const authController = {
 
     async getCurrentUser(req, res) {
         try {
-            const db = admin.firestore();
-            const userDoc = await db.collection('users').doc(req.user.uid).get();
+            const user = req.user;
             
-            if (!userDoc.exists) {
+            const db = admin.firestore();
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            
+            if (!userDoc) {
                 return res.status(404).json({ message: 'User not found' });
             }
 
+            const userData = userDoc.data();
             res.status(200).json({
                 user: {
-                    uid: req.user.uid,
-                    email: req.user.email,
-                    ...userDoc.data()
+                    uid: user.uid,
+                    email: user.email,
+                    ...userData
                 }
             });
         } catch (error) {
-            logger.error('Get current user error:', error);
-            res.status(500).json({ message: error.message });
+            logger.error('Login error:', error);
+            res.status(401).json({ message: 'Authentication failed' });
         }
     }
 };
