@@ -8,8 +8,12 @@ const authHandler = async (req, res, next) => {
             return res.status(401).json({ message: 'No token provided'});
         }
 
+        const db = admin.firestore();
         const decodedToken = await admin.auth().verifyIdToken(token);
+        const userDoc = await db.collection('users').doc(decodedToken.uid).get();
+        
         req.user = decodedToken;
+        req.user.details = userDoc.data();
         next();
     } catch (error) {
         logger.error('Authentication error: ', error);

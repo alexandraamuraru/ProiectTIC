@@ -65,48 +65,21 @@ const booksController = {
                 title, 
                 author, 
                 ISBN, 
+                publisher,
                 publishedYear, 
-                category,
-                description,
-                location,
-                metadata
+                totalCopies,
             } = req.body;
-            
             const db = admin.firestore();
             const newBook = {
                 title,
                 author,
                 ISBN,
+                publisher,
                 publishedYear,
-                category: {
-                    ...category,
-                    id: admin.firestore.FieldValue.serverTimestamp().toString()
-                },
-                description,
-                inventory: {
-                    total: req.body.totalCopies || 1,
-                    available: req.body.totalCopies || 1,
-                    inRepair: 0
-                },
-                location: {
-                    floor: location?.floor || '1',
-                    section: location?.section,
-                    shelf: location?.shelf
-                },
+                totalCopies,    
                 currentLoans: [],
-                metadata: {
-                    tags: metadata?.tags || [],
-                    language: metadata?.language || 'English',
-                    edition: metadata?.edition,
-                    publisher: metadata?.publisher
-                },
-                stats: {
-                    timesLoaned: 0,
-                    currentReservations: 0,
-                    averageRating: 0
-                }
             };
-
+            
             const bookRef = await db.collection('books').add(newBook);
             res.status(201).json({ id: bookRef.id, ...newBook });
         } catch (error) {
@@ -121,8 +94,6 @@ const booksController = {
             const updateData = req.body;
             const db = admin.firestore();
 
-            delete updateData.currentLoans;
-            delete updateData.stats;
 
             await db.collection('books').doc(id).update(updateData);
             

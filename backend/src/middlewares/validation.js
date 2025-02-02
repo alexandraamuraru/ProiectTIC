@@ -1,18 +1,19 @@
 const validateBook = (req, res, next) => {
     const { title, author, ISBN } = req.body;
-
+    
+    console.log(req.body)
     if (!title || !author || !ISBN) {
         return res.status(400).json({ 
             message: 'Title, author, and ISBN are required' 
         });
     }
-
-    const isbnRegex = /^(?:\d{10}|\d{13})$/;
-    if (!isbnRegex.test(ISBN)) {
-        return res.status(400).json({ 
-            message: 'Invalid ISBN format' 
-        });
-    }
+    
+    // const isbnRegex = /^(?:\d{10}|\d{13})$/;
+    // if (!isbnRegex.test(ISBN)) {
+    //     return res.status(400).json({ 
+    //         message: 'Invalid ISBN format' 
+    //     });
+    // }
 
     next();
 };

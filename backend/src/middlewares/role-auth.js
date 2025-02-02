@@ -3,8 +3,7 @@ const roleAuth = (allowedRoles) => {
         if (!req.user) {
             return res.status(401).json({ message: 'Unauthorized' });
         }
-
-        if (!allowedRoles.includes(req.user.role)) {
+        if (!allowedRoles.includes(req.user.details.role)) {
             return res.status(403).json({ message: 'Forbidden: Insufficient permissions' });
         }
 

@@ -6,11 +6,6 @@ const authController = {
         try {
             const { email, password, fullName } = req.body;
 
-            // const userRecord = await admin.auth().createUser({
-            //     email,
-            //     password
-            // });
-
             const db = admin.firestore();
             await db.collection('users').doc(userRecord.uid).set({
                 email,
@@ -42,12 +37,12 @@ const authController = {
             const db = admin.firestore();
             const userDoc = await db.collection('users').doc(decodedToken.uid).get();
             
-            if (!userDoc) {
+            if (!req.user.details) {
                 return res.status(404).json({ message: 'User not found' });
             }
 
-            console.log(userDoc)
-            const userData = userDoc.data();
+            // const userData = userDoc.data();
+            const userData = req.user.details;
             res.status(200).json({
                 user: {
                     uid: decodedToken.uid,
