@@ -12,7 +12,6 @@ const usersController = {
                 users.push({ id: doc.id, ...doc.data() });
             });
             
-            console.log("acum trece")
             res.status(200).json(users);
         } catch (error) {
             logger.error('Error getting users:', error);
