@@ -6,13 +6,10 @@
       </header>
   
       <div class="admin-actions">
-        <button class="action-btn" @click="redirectTo('/admin/users')">
-          Manage Users
-        </button>
         <button class="action-btn" @click="redirectTo('/librarians')">
           Manage Librarians
         </button>
-        <button class="action-btn" @click="redirectTo('/admin/loans')">
+        <button class="action-btn" @click="redirectTo('/loans')">
           Manage Loans
         </button>
         <button class="action-btn" @click="redirectTo('/books')">

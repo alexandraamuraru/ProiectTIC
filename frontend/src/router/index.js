@@ -32,14 +32,8 @@ const routes = [
   },
   {
     path: '/admin',
-    component: () => import('../views/admin/AdminLayout.vue'),
+    component: () => import('../views/admin/AdminDashboard.vue'),
     beforeEnter: requireAdmin,
-    children: [
-      {
-        path: '',
-        component: () => import('../views/admin/AdminDashboard.vue')
-      },
-    ],
   },
   {
     path: '/librarian',
@@ -62,15 +56,7 @@ router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
   const { user, userDetails } = authStore;
 
-  if (!userDetails && user) {
-    try {
-      await authStore.fetchUserDetails();
-    } catch (error) {
-      console.error('Error fetching user details:', error);
-    }
-  }
-
-  if (user && !authStore.userDetails) {
+  if (user && !userDetails) {
     await authStore.logout(); 
     return next('/login');
   }
@@ -78,16 +64,6 @@ router.beforeEach(async (to, from, next) => {
   if (to.path === '/') return next('/login');
 
   if (to.path === '/login' && authStore.userDetails) {
-    if (authStore.userDetails.role === 'admin') {
-      return next('/admin');
-    } else if (authStore.userDetails.role === 'librarian') {
-      return next('/librarian');
-    } else {
-      return next('/member');
-    }
-  }
-
-  if (to.path === '/' && authStore.userDetails) {
     if (authStore.userDetails.role === 'admin') {
       return next('/admin');
     } else if (authStore.userDetails.role === 'librarian') {

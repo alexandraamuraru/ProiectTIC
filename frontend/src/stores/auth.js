@@ -59,7 +59,6 @@ export const useAuthStore = defineStore('auth', {
             try {
                 const firebaseUser = await firebaseService.register(email, password);
                 
-                const token = await firebaseUser.getIdToken();
                 const uid = firebaseUser.uid;
                 
                 const response = await api.post('/auth/register', { 
