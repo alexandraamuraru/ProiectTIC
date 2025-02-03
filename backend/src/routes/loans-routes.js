@@ -10,7 +10,7 @@ router.post('/',
     loansController.createLoan
 );
 
-router.put('/:loanId/return', 
+router.put('/:loanId/return',
     authMiddleware, 
     roleAuth(['admin', 'librarian']), 
     loansController.returnBook

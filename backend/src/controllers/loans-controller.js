@@ -42,7 +42,7 @@ const loansController = {
 
         const bookUpdate = {
             totalCopies: admin.firestore.FieldValue.increment(-1),
-          currentLoans: admin.firestore.FieldValue.arrayUnion({
+            currentLoans: admin.firestore.FieldValue.arrayUnion({
             userId,
           }),
         };

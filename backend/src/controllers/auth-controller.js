@@ -23,33 +23,6 @@ const authController = {
         }
     },
 
-    async login(req, res) {
-        try {
-            const { token } = req.body;
-            
-            const decodedToken = await admin.auth().verifyIdToken(token);
-            
-            const db = admin.firestore();
-            const userDoc = await db.collection('users').doc(decodedToken.uid).get();
-            
-            if (!req.user.details) {
-                return res.status(404).json({ message: 'User not found' });
-            }
-
-            const userData = req.user.details;
-            res.status(200).json({
-                user: {
-                    uid: decodedToken.uid,
-                    email: decodedToken.email,
-                    ...userData
-                }
-            });
-        } catch (error) {
-            logger.error('Login error:', error);
-            res.status(401).json({ message: 'Authentication failed' });
-        }
-    },
-
     async getCurrentUser(req, res) {
         try {
             const user = req.user;
