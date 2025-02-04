@@ -48,7 +48,7 @@
     width: 300px;
   }
   
-  .librarian-btn {
+  .action-btn {
     width: 100%;
     padding: 1rem;
     background-color: #2c3e50;

@@ -69,7 +69,7 @@ export const useAuthStore = defineStore('auth', {
                 
                 if (response.status === 201) {
                     await this.login(email, password);
-                } throw new Error("Register failed");
+                } else throw new Error("Register failed");
             } catch (error) {
                 switch (error.code) {
                     case 'auth/email-already-in-use':
